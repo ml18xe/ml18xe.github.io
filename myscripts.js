@@ -4,5 +4,5 @@ function init(){
 }
 
 function revealAnswer(){
-    document.getElementById("answer").innerHTML = "かど corner";
+    document.getElementById("answer").innerHTML = "かど - corner";
 }
