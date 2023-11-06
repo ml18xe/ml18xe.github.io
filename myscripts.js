@@ -20,12 +20,12 @@ function revealAnswer(){
         document.getElementById("center").appendChild(x);
         
         //Nav Buttons
-        let remainingText = document.createElement("p");
+        let remainingText = document.createElement("h1");
         let incorrectButton = document.createElement("button");
         let correctButton = document.createElement("button");
         let container = document.createElement("div");
 
-        remainingText.className = "answer";
+        // remainingText.className = "answer";
         incorrectButton.className = "answer";
         correctButton.className = "answer";
         container.className = "bottom";
@@ -33,11 +33,12 @@ function revealAnswer(){
         remainingText.appendChild(document.createTextNode("Remaining: 000"));
         incorrectButton.appendChild(document.createTextNode("Incorrect: 000"));
         correctButton.appendChild(document.createTextNode("Correct: 000"));
-        container.appendChild(remainingText);
+
         container.appendChild(incorrectButton);
         container.appendChild(correctButton);
         
         document.body.appendChild(container);
+        document.body.appendChild(remainingText);
 
     }
 
