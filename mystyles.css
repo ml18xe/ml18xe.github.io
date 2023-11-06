@@ -31,3 +31,12 @@
     border: 3px solid green; 
     flex-direction: column;
 }
+
+.bottom {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* height:calc(100vh - 25px); */
+    border: 3px solid green; 
+    flex-direction: row;
+}
