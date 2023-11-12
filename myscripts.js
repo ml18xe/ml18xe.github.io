@@ -4,6 +4,7 @@ var bag;
 var incorrectBag;
 var correctBag;
 var questionNumber;
+var words;
 
 function init(){
 
@@ -11,79 +12,73 @@ function init(){
     incorrectBag = new Bag();
     correctBag = new Bag();
 
-    kanji = ["角","角度","三角","四角",
-            "直前","直後","直す","正直","直行","直角",
-            "値上げ","値下げ","値切る","値段",
-            "全部","全く",
-            "体","全体","人体","体育",
-            "出身","身の上","身体",
-            "知っている","知らない","知り合い","知人","無知","通知",
-            "考える","思考","考古学",
-            "～様","様子","様々",
-            "市長","市民","市場",
-            "町内","下町",
-            "市町村","村長","小さい村",
-            "旅行","旅先","旅館","旅立つ",
-            "乗る","乗車","分乗","乗っ取る","乗馬",
-            "有名","所有","有力","国有","私有",
-            "無事","無口","無言","無休","有無",
-            "生活","活動","活用","活字",
-            "合計","時計","会計","計る",
-            "計画","画家","絵画","画数",
-            "例文","例えば","例年","例外","一例"];
-    kana = ["かど","かくど","さんかく","しかく",
-            "ちょくぜん","ちょくご","なおす","しょうじき","ちょっこう","ちょっかく",
-            "ねあげ","ねさげ","ねぎる","ねだん",
-            "ぜんぶ","まったく",
-            "からだ","ぜんたい","じんたい","たいいく",
-            "しゅっしん","みのうえ","しんたい",
-            "しっている","しらない","しりあい","ちじん","むち","つうち",
-            "かんがえる","しこう","こうこがく",
-            "～さま","ようす","さまざま",
-            "しちょう","しみん","いちば、しじょう",
-            "ちょうない","したまち",
-            "しちょうそん","そんちょう","ちいさいむら",
-            "りょこう","たびさき","りょかん","たびだつ",
-            "のる","じょうしゃ","ぶんじょうする","のっとる","じょうば",
-            "ゆうめい","しょゆう","ゆうりょく","こくゆう","しゆう",
-            "ぶじ","むくち","むごん","むきゅう","うむ",
-            "せいかつ","かつどう","かつよう","かつじ",
-            "ごうけい","とけい","かいけい","はかる",
-            "けいかく","がか","かいが","かくすう",
-            "れいぶん","たとえば","れいねん","れいがい","いちれい"];
-    english = ["corner","degree of an angle","triangle","square",
-            "immediately before/after","fix, correct","honest","go directly","right angle",
-            "price increase; increase a price","price decrease; decrease a price","haggle over the price","price",
-            "all","entirely, quite",
-            "body","the whole, in (all)","the human body","physical education",
-            "(be) from …","one's condition","body",
-            "know","not know","acquaintance","acquaintance","ignorance","notification, communication; notify","Kochi Prefecture",
-            "think","thinking, thought; think, consider","archaeology",
-            "Mr./Ms. (honorific)","situation, aspect, appearance","various",
-            "mayor","citizen, townspeople","marketplace, market",
-            "neighborhood","downtown area",
-            "cities, towns, and villages","village mayor","small village",
-            "trip, travel; go travelling","destination","Japanese inn","start on a journey",
-            "get on/in","get on a train/get in a car","pool people into separate cars","take over, commandeer, hijack","horseback riding",
-            "famous","possession, ownership; possess","influential, powerful","state-owned","privately-owned",
-            "safe and sound","taciturn, laconic","silent, mute","no holidays, always open (shop)","presence or absence, yes or no",
-            "life; live","activity; be active","practical use; conjugate; make use of","printing",
-            "total; sum up","clock, watch","accounting, paying a bill","time, calculate",
-            "plan, project","painter","pictures, paintings","number of strokes",
-            "sample sentence","for instance","normal year, every year","exception","one example"];
+    // kanji = ["角","角度","三角","四角",
+    //         "直前","直後","直す","正直","直行","直角",
+    //         "値上げ","値下げ","値切る","値段",
+    //         "全部","全く",
+    //         "体","全体","人体","体育",
+    //         "出身","身の上","身体",
+    //         "知っている","知らない","知り合い","知人","無知","通知",
+    //         "考える","思考","考古学",
+    //         "～様","様子","様々",
+    //         "市長","市民","市場",
+    //         "町内","下町",
+    //         "市町村","村長","小さい村",
+    //         "旅行","旅先","旅館","旅立つ",
+    //         "乗る","乗車","分乗","乗っ取る","乗馬",
+    //         "有名","所有","有力","国有","私有",
+    //         "無事","無口","無言","無休","有無",
+    //         "生活","活動","活用","活字",
+    //         "合計","時計","会計","計る",
+    //         "計画","画家","絵画","画数",
+    //         "例文","例えば","例年","例外","一例"];
+    // kana = ["かど","かくど","さんかく","しかく",
+    //         "ちょくぜん","ちょくご","なおす","しょうじき","ちょっこう","ちょっかく",
+    //         "ねあげ","ねさげ","ねぎる","ねだん",
+    //         "ぜんぶ","まったく",
+    //         "からだ","ぜんたい","じんたい","たいいく",
+    //         "しゅっしん","みのうえ","しんたい",
+    //         "しっている","しらない","しりあい","ちじん","むち","つうち",
+    //         "かんがえる","しこう","こうこがく",
+    //         "～さま","ようす","さまざま",
+    //         "しちょう","しみん","いちば、しじょう",
+    //         "ちょうない","したまち",
+    //         "しちょうそん","そんちょう","ちいさいむら",
+    //         "りょこう","たびさき","りょかん","たびだつ",
+    //         "のる","じょうしゃ","ぶんじょうする","のっとる","じょうば",
+    //         "ゆうめい","しょゆう","ゆうりょく","こくゆう","しゆう",
+    //         "ぶじ","むくち","むごん","むきゅう","うむ",
+    //         "せいかつ","かつどう","かつよう","かつじ",
+    //         "ごうけい","とけい","かいけい","はかる",
+    //         "けいかく","がか","かいが","かくすう",
+    //         "れいぶん","たとえば","れいねん","れいがい","いちれい"];
+    // english = ["corner","degree of an angle","triangle","square",
+    //         "immediately before/after","fix, correct","honest","go directly","right angle",
+    //         "price increase; increase a price","price decrease; decrease a price","haggle over the price","price",
+    //         "all","entirely, quite",
+    //         "body","the whole, in (all)","the human body","physical education",
+    //         "(be) from …","one's condition","body",
+    //         "know","not know","acquaintance","acquaintance","ignorance","notification, communication; notify","Kochi Prefecture",
+    //         "think","thinking, thought; think, consider","archaeology",
+    //         "Mr./Ms. (honorific)","situation, aspect, appearance","various",
+    //         "mayor","citizen, townspeople","marketplace, market",
+    //         "neighborhood","downtown area",
+    //         "cities, towns, and villages","village mayor","small village",
+    //         "trip, travel; go travelling","destination","Japanese inn","start on a journey",
+    //         "get on/in","get on a train/get in a car","pool people into separate cars","take over, commandeer, hijack","horseback riding",
+    //         "famous","possession, ownership; possess","influential, powerful","state-owned","privately-owned",
+    //         "safe and sound","taciturn, laconic","silent, mute","no holidays, always open (shop)","presence or absence, yes or no",
+    //         "life; live","activity; be active","practical use; conjugate; make use of","printing",
+    //         "total; sum up","clock, watch","accounting, paying a bill","time, calculate",
+    //         "plan, project","painter","pictures, paintings","number of strokes",
+    //         "sample sentence","for instance","normal year, every year","exception","one example"];
+    // 
+    // console.log(kanji.length+" "+kana.length+" "+english.length);
+    let file = "fetch_info.txt"
 
-    console.log(kanji.length+" "+kana.length+" "+english.length);
-
-    for(let i=0;i<kanji.length;i++){
-        bag.add(bag.count(), [kanji[i],kana[i]+" - "+english[i]]);
-        bag.add(bag.count(), [kana[i],kanji[i]+" - "+english[i]]);
-    }
-
-    questionNumber = Math.floor(Math.random() * bag.count());
-
-    question = bag.get(questionNumber)[0];
-    answer = bag.get(questionNumber)[1];
-    document.getElementById("question").innerHTML = question;
+    fetch (file)
+    .then(x => x.text())
+    .then(y => loadText(y));
 }
 
 function revealAnswer(){
@@ -157,6 +152,38 @@ function nextQuestion(correct){
     document.getElementById("container").remove();
 }
 
+function loadText(text)
+{
+    let lines = text.split("\n");
+    words = [];
+
+    for(let i=0,x=0,y=0;i<lines.length;i++){
+        if(x == 0){
+            words[y] = [];
+        }
+
+        if(lines[i] != ""){
+            words[y][x] = lines[i];
+            x++;
+        }
+        else{
+            x = 0;
+            y++;
+        }
+    }
+
+    for(let i=0;i<words.length;i++){
+        console.log("Hey");
+        bag.add(bag.count(), [words[i][0],words[i][1]+" - "+words[i][2]]);
+        bag.add(bag.count(), [words[i][1],words[i][0]+" - "+words[i][2]]);
+    }
+
+    questionNumber = Math.floor(Math.random() * bag.count());
+
+    question = bag.get(questionNumber)[0];
+    answer = bag.get(questionNumber)[1];
+    document.getElementById("question").innerHTML = question;
+}
 
 function Bag() {
     var _items = {};
