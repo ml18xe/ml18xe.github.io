@@ -113,7 +113,12 @@ function revealAnswer(){
         container.className = "bottom";
 
         home.appendChild(document.createTextNode("["+filename.substring(0,filename.length-4)+"]"));
-        home.href = "index.html";
+        home.href = "index.html"
+        home.onclick =  function(e) {
+            if(!confirm('Are you sure?')){
+                e.preventDefault();
+            }
+        };
         
         remainingText.appendChild(home);
         remainingText.appendChild(document.createTextNode(" Remaining: " + (bag.count()-1)+" words"));
