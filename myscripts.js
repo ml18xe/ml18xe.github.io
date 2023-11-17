@@ -1,3 +1,4 @@
+var filename;
 var question;
 var answer;
 var bag;
@@ -6,7 +7,9 @@ var correctBag;
 var questionNumber;
 var words;
 
-function init(){
+function init(category,file){
+
+    filename = file;
 
     bag = new Bag();
     incorrectBag = new Bag();
@@ -74,11 +77,10 @@ function init(){
     //         "sample sentence","for instance","normal year, every year","exception","one example"];
     // 
     // console.log(kanji.length+" "+kana.length+" "+english.length);
-    let file = "fetch_info.txt"
 
     fetch (file)
     .then(x => x.text())
-    .then(y => loadText(y));
+    .then(y => loadText(category,y));
 }
 
 function revealAnswer(){
@@ -94,6 +96,7 @@ function revealAnswer(){
         document.getElementById("center").appendChild(x);
         
         //Nav Buttons
+        let home = document.createElement('a');
         let remainingText = document.createElement("h1");
         let incorrectButton = document.createElement("button");
         let correctButton = document.createElement("button");
@@ -109,7 +112,11 @@ function revealAnswer(){
         correctButton.className = "answer";
         container.className = "bottom";
 
-        remainingText.appendChild(document.createTextNode("Remaining: " + (bag.count()-1)));
+        home.appendChild(document.createTextNode("["+filename.substring(0,filename.length-4)+"]"));
+        home.href = "index.html";
+        
+        remainingText.appendChild(home);
+        remainingText.appendChild(document.createTextNode(" Remaining: " + (bag.count()-1)+" words"));
         incorrectButton.appendChild(document.createTextNode("Incorrect: " + incorrectBag.count()));
         correctButton.appendChild(document.createTextNode("Correct: " + correctBag.count()));
 
@@ -118,7 +125,6 @@ function revealAnswer(){
         
         document.body.appendChild(container);
         document.body.appendChild(remainingText);
-
     }
 }
 
@@ -152,30 +158,52 @@ function nextQuestion(correct){
     document.getElementById("container").remove();
 }
 
-function loadText(text)
+function loadText(category, text)
 {
     let lines = text.split("\n");
     words = [];
 
-    for(let i=0,x=0,y=0;i<lines.length;i++){
-        if(x == 0){
-            words[y] = [];
-        }
+    if(category == "kanji"){
+        for(let i=0,x=0,y=0;i<lines.length;i++){
+            if(x == 0){
+                words[y] = [];
+            }
 
-        if(lines[i] != ""){
-            words[y][x] = lines[i];
-            x++;
+            if(lines[i] != ""){
+                words[y][x] = lines[i];
+                x++;
+            }
+            else{
+                console.log(x); //Debug
+                x = 0;
+                y++;
+            }
         }
-        else{
-            x = 0;
-            y++;
+    }
+    else if(category == "vocab"){
+        for(let i=0,x=0,y=0;i<lines.length;i++){
+            if(x == 0 && lines[i]!="----------------"){
+                words[y] = [];
+            }
+
+            if(lines[i]=="----------------"){
+                console.log(y); //Debug
+                y = 0;
+                x++;
+            }
+            else{
+                words[y][x] = lines[i];
+                y++;
+            }
         }
+    }
+    else{
+        console.log("Category: " + category + " does not exist.");
     }
 
     for(let i=0;i<words.length;i++){
-        console.log("Hey");
-        bag.add(bag.count(), [words[i][0],words[i][1]+" - "+words[i][2]]);
-        bag.add(bag.count(), [words[i][1],words[i][0]+" - "+words[i][2]]);
+        if(words[i][0] != "\r" && words[i][0] != "\n") bag.add(bag.count(), [words[i][0],words[i][1]+" - "+words[i][2]]);
+        if(words[i][1] != "\r" && words[i][1] != "\n") bag.add(bag.count(), [words[i][1],words[i][0]+" - "+words[i][2]]);
     }
 
     questionNumber = Math.floor(Math.random() * bag.count());

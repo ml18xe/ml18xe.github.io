@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <script>
+        window.onload = function(){
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+
+            const category = urlParams.get('category');
+            const file = urlParams.get('file');
+
+            init(category,file); 
+        }
+    </script>
+
+    <body>
+        <script src="myscripts.js"></script>
+        <link rel="stylesheet" href="mystyles.css">
+
+        <div id="center" class = "center">
+            <button id="questionButton" type ="button" onclick="revealAnswer()">
+                <p id="question" class="question">Hello World</p>
+            </button>
+        </div>
+    </body>
+</html>
