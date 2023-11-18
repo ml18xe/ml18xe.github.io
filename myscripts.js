@@ -130,6 +130,10 @@ function revealAnswer(){
         
         document.body.appendChild(container);
         document.body.appendChild(remainingText);
+
+        //needs to be here.
+        document.getElementById("question").style.fontSize = "151px";
+        resize_to_fit();
     }
 }
 
@@ -161,6 +165,9 @@ function nextQuestion(correct){
     document.getElementById("answer").remove();
     document.getElementById("remainingText").remove();
     document.getElementById("container").remove();
+
+    document.getElementById("question").style.fontSize = "151px";
+    resize_to_fit();
 }
 
 function loadText(category, text)
@@ -216,6 +223,19 @@ function loadText(category, text)
     question = bag.get(questionNumber)[0];
     answer = bag.get(questionNumber)[1];
     document.getElementById("question").innerHTML = question;
+
+    document.getElementById("question").style.fontSize = "151px";
+    resize_to_fit();
+}
+
+function resize_to_fit(){
+    var fontsize = parseInt(document.getElementById("question").style.fontSize);
+
+    document.getElementById("question").style.fontSize = (fontsize - 1)+"px";
+
+    if(document.getElementById("center").offsetWidth - document.getElementById("questionButton").offsetWidth <= 6){
+        resize_to_fit();
+    }
 }
 
 function Bag() {
